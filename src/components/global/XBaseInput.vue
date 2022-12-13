@@ -1,11 +1,23 @@
 <template>
-  <div class="input-wrapper">
-    <input :placeholder="placeholder" :type="type" />
-  </div>
+  <!-- <div class="input-wrapper"> -->
+  <input
+    :placeholder="placeholder"
+    :type="type"
+    v-on="$listeners"
+    v-bind="$attrs"
+    v-model="formValue"
+  />
+  <!-- </div> -->
 </template>
 
 <script>
 export default {
+  inheritAttrs: true,
+  data() {
+    return {
+      formValue: this.value,
+    };
+  },
   props: {
     type: {
       type: String,
@@ -14,6 +26,18 @@ export default {
     placeholder: {
       type: String,
       required: true,
+    },
+    value: {
+      type: String,
+      default: '',
+    },
+  },
+
+  watch: {
+    formValue(v) {
+      this.$emit('input', v);
+      console.log(v);
+      this.formValue = v;
     },
   },
 };

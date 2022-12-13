@@ -1,9 +1,16 @@
 <template>
-  <button class="btn-class"><slot /></button>
+  <button class="btn-class" :type="type"><slot /></button>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    type: {
+      type: String,
+      default: '',
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
