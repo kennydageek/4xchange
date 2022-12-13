@@ -1,5 +1,7 @@
 <template>
-  <div>public layout</div>
+  <div class="public-layout">
+    <slot />
+  </div>
 </template>
 
 <script>
