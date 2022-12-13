@@ -12,6 +12,7 @@ button {
   background: #3fb967;
   //   width: 100%;
   text-align: center;
+  font-size: 1.2rem;
   border-radius: 0.5rem;
 }
 

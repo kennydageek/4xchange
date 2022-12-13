@@ -1,12 +1,12 @@
 <template>
-  <div class="login-wrapper">
+  <div class="login-wrapper mt-15">
     <h1 class="login-wrapper__heading mb-10">Login</h1>
 
     <form>
       <x-base-input
         class="base-input mb-5"
         type="text"
-        placeholder="Email address"
+        placeholder="Username"
       />
       <x-base-input
         class="base-input mb-10"
@@ -22,7 +22,8 @@
     </form>
 
     <p class="register">
-      Don't have an account? <router-link to="/register">Sign up</router-link>
+      Don't have an account?
+      <router-link :to="{ name: 'register' }">Sign up</router-link>
     </p>
   </div>
 </template>
@@ -41,10 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 .login-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 0 auto;
   background-color: rgba(97, 100, 102, 0.4);
   width: 80%;
   max-width: 25rem;
