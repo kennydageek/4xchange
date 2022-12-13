@@ -13,6 +13,10 @@ export default {
   registerUser(body) {
     return apiClient.post('/register', body);
   },
+
+  login(body) {
+    return apiClient.post('/login', body);
+  },
 };
 
 // {

@@ -2,16 +2,29 @@
   <div class="login-wrapper mt-15">
     <h1 class="login-wrapper__heading mb-10">Login</h1>
 
-    <form>
+    <form @submit.prevent="login">
       <x-base-input
         class="base-input mb-5"
         type="text"
         placeholder="Username"
+        v-model="form.name"
+        :value="form.name"
       />
+
+      <x-base-input
+        class="base-input mb-5"
+        type="text"
+        placeholder="Email address"
+        v-model="form.email"
+        :value="form.email"
+      />
+
       <x-base-input
         class="base-input mb-10"
         type="password"
         placeholder="Password"
+        v-model="form.password"
+        :value="form.password"
       />
       <x-base-button
         class="btn-cta mb-5"
@@ -33,9 +46,30 @@ export default {
   data() {
     return {
       valid: true,
-      username: '',
-      password: '',
+      form: {
+        name: null,
+        password: null,
+        email: null,
+      },
     };
+  },
+
+  methods: {
+    async login() {
+      try {
+        const body = {
+          name: this.form.name,
+          email: 'george.bluth@reqres.in',
+          password: this.form.password,
+        };
+
+        await this.$store.dispatch('auth/login', body);
+        await this.$router.push({ name: 'dashboard' });
+      } catch (error) {
+        console.log(error);
+        alert(error.response.data.error);
+      }
+    },
   },
 };
 </script>

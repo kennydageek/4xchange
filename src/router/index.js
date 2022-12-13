@@ -32,7 +32,9 @@ const routes = [
   {
     path: '/dashboard',
     component: () => import('@/views/dashboard/DashboardView'),
+    name: 'dashboard',
     meta: {
+      requiresAuth: true,
       title: 'Dashboard',
       layout: 'private-layout',
     },
@@ -43,6 +45,20 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const loggedIn = localStorage.getItem('user');
+
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!loggedIn) {
+      next('/');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

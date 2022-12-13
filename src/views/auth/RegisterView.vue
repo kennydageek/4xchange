@@ -86,9 +86,9 @@ export default {
           incomingCurrency: this.form.incoming,
           outgoingCurrency: this.form.outgoing,
         };
-        console.log(body);
 
         await this.$store.dispatch('auth/registerUser', body);
+        await this.$router.push({ name: 'dashboard' });
       } catch (error) {
         console.log(error);
       }
