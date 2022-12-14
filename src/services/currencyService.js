@@ -1,7 +1,19 @@
-import { apiClient } from './authService';
+import axios from 'axios';
+const API_KEY = 'T0VN4EEVBYI4WB1P';
+
+export const curClient = axios.create({
+  baseURL: 'https://www.alphavantage.co/',
+  withCredentials: false,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+});
 
 export default {
-  exchangeRates(from, to) {
-    return apiClient.get();
+  getExchangeRate(from, to) {
+    return curClient.get(
+      `query?function=CURRENCY_EXCHANGE_RATE&from_currency=${from}&to_currency=${to}&apikey=${API_KEY}`
+    );
   },
 };
