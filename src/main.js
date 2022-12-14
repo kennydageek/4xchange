@@ -5,7 +5,12 @@ import store from './store';
 import '@/assets/styles/imports.scss';
 import vuetify from '@/plugins/vuetify';
 import Vuelidate from 'vuelidate';
+import VueApexCharts from 'vue-apexcharts';
+
 Vue.use(Vuelidate);
+Vue.use(VueApexCharts);
+
+Vue.component('apexChart', VueApexCharts);
 
 Vue.config.productionTip = false;
 

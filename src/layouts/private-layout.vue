@@ -5,7 +5,7 @@
         <x-base-sidebar />
       </div>
     </v-col>
-    <v-col cols="6" class="py-10 px-5 slot-col red">
+    <v-col cols="6" class="py-10 px-5 slot-col">
       <slot />
     </v-col>
     <v-col cols="3" class="orange">traddeer</v-col>

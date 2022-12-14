@@ -5,17 +5,64 @@
     <p class="outgoing-currency">
       {{ $store.state.currency.exchangeRate }} {{ incoming }}
     </p>
+
+    <div class="mt-10 white">
+      <apex-chart
+        width="600"
+        height="350"
+        type="area"
+        :options="chartOptions"
+        :series="series"
+      ></apex-chart>
+    </div>
   </div>
 </template>
 
 <script>
-// import {mapActions} from vuex;
 export default {
+  components: {
+    // apexchart,
+  },
   data() {
     return {
       incoming: '',
       outgoing: '',
       name: '',
+
+      chartOptions: {
+        chart: {
+          id: 'vuechart-example',
+          type: 'area',
+          height: 350,
+        },
+        xaxis: {
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+        },
+      },
+      series: [
+        {
+          name: 'EUR/USD',
+          data: [30, 40, 35, 50, 49, 60, 70, 91],
+        },
+      ],
+      dataLabels: {
+        enabled: false,
+      },
+      title: {
+        text: 'EURUSD DAILY MOVEMENT',
+        align: 'left',
+      },
+      markers: {
+        size: 0,
+      },
+      yaxis: {
+        title: {
+          text: 'Price',
+        },
+      },
+      xaxis: {
+        type: 'datetime',
+      },
     };
   },
   // methods: {
