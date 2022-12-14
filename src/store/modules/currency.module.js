@@ -4,11 +4,16 @@ import currencyService from '@/services/currencyService';
 
 const state = {
   exchangeRate: 0,
+  price: null,
 };
 const getters = {};
 const mutations = {
   SET_EXCHANGE_RATE(state, exchangeRate) {
     state.exchangeRate = exchangeRate;
+  },
+
+  SET_DAILY_PRICE(state, price) {
+    state.price = price;
   },
 };
 const actions = {
@@ -23,6 +28,14 @@ const actions = {
     let eurToUsd = exchangeRate['5. Exchange Rate'];
 
     commit('SET_EXCHANGE_RATE', eurToUsd);
+  },
+
+  async getDailyPrice({ commit }) {
+    const { data } = await currencyService.getDailyPrice('EUR', 'USD');
+    console.log(data);
+    let price = data['Time Series FX (Daily)'];
+    console.log(price);
+    commit('SET_DAILY_PRICE', price);
   },
 };
 

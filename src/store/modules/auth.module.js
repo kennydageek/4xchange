@@ -26,6 +26,12 @@ const mutations = {
       })
     );
   },
+
+  CLEAR_USER_DATA() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    location.reload();
+  },
 };
 const actions = {
   async registerUser({ commit }, form) {
@@ -45,6 +51,10 @@ const actions = {
     const { data } = await AuthService.login(form);
     console.log(data);
     commit('SET_USER_DATA', data);
+  },
+
+  async logout({ commit }) {
+    commit('CLEAR_USER_DATA');
   },
 };
 

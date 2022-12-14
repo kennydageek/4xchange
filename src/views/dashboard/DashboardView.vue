@@ -6,11 +6,11 @@
       {{ $store.state.currency.exchangeRate }} {{ incoming }}
     </p>
 
-    <div class="mt-10 white">
+    <div class="mt-10 white bar-chart">
       <apex-chart
-        width="600"
+        width="400"
         height="350"
-        type="area"
+        type="bar"
         :options="chartOptions"
         :series="series"
       ></apex-chart>
@@ -28,21 +28,36 @@ export default {
       incoming: '',
       outgoing: '',
       name: '',
+      day: null,
+      // dailyHigh: [this.day],
 
       chartOptions: {
         chart: {
           id: 'vuechart-example',
-          type: 'area',
+          type: 'bar',
           height: 350,
         },
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+          categories: [1209, 1210, 1211, 1212, 1213, 1214, 1213],
+        },
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shadeIntensity: 1,
+          inverseColors: false,
+          opacityFrom: 0.5,
+          opacityTo: 0,
+          stops: [1, 1.5, 2.0],
         },
       },
       series: [
         {
-          name: 'EUR/USD',
-          data: [30, 40, 35, 50, 49, 60, 70, 91],
+          name: 'Currency pair',
+          data: [
+            1.05948, 1.05329, 1.05498, 1.05649, 1.05882, 1.05802, 1.06733,
+            1.06847,
+          ],
         },
       ],
       dataLabels: {
@@ -80,6 +95,11 @@ export default {
     this.incoming = JSON.parse(localStorage.getItem('user')).incomingCurrency;
     this.outgoing = JSON.parse(localStorage.getItem('user')).outgoingCurrency;
     await this.$store.dispatch('currency/getExchangeRates');
+    await this.$store.dispatch('currency/getDailyPrice');
+    this.day = await this.$store.state.currency.price;
+
+    // this.day = Number(this.day);
+    console.log(this.day);
   },
 };
 </script>
@@ -99,5 +119,9 @@ export default {
 .outgoing-currency {
   font-size: 1.6rem;
   color: #fff;
+}
+
+.bar-chart {
+  width: 400px;
 }
 </style>

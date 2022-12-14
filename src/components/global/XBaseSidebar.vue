@@ -7,6 +7,8 @@
         link.title
       }}</router-link>
     </div>
+
+    <button class="logout mt-5" @click="logout">Logout</button>
   </div>
 </template>
 
@@ -27,12 +29,14 @@ export default {
           title: 'Trade',
           path: '/trade',
         },
-        {
-          title: 'Logout',
-          path: '',
-        },
       ],
     };
+  },
+
+  methods: {
+    async logout() {
+      await this.$store.dispatch('auth/logout');
+    },
   },
 };
 </script>
@@ -40,8 +44,8 @@ export default {
 <style lang="scss" scoped>
 .sidebar-wrapper {
   // background: purple;
-  height: 23rem;
-  position: relative;
+  // height: 23rem;
+  // position: relative;
 }
 
 .heading {
@@ -54,10 +58,10 @@ export default {
 }
 
 .nav-links {
-  &:last-of-type {
-    position: absolute;
-    bottom: 0;
-  }
+  // &:last-of-type {
+  //   position: absolute;
+  //   bottom: 0;
+  // }
   &__link {
     text-decoration: none;
     font-size: 1rem;
@@ -68,5 +72,12 @@ export default {
       color: var(--color-primary);
     }
   }
+}
+
+.logout {
+  font-size: 1rem;
+  background: var(--color-primary);
+  padding: 0.5rem 2.5rem;
+  border-radius: 0.5rem;
 }
 </style>
