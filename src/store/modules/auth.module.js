@@ -27,6 +27,23 @@ const mutations = {
     );
   },
 
+  SET_LOGIN_DATA(state, { form, token }) {
+    let { name, email } = form;
+    state.user = form;
+    localStorage.setItem('token', JSON.stringify(token));
+    apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    localStorage.setItem(
+      'user',
+      JSON.stringify({
+        name,
+        email,
+        incomingCurrency: 'EUR',
+        outgoingCurrency: 'USD',
+      })
+    );
+  },
+
   CLEAR_USER_DATA() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
@@ -42,15 +59,16 @@ const actions = {
     // console.log(data);
     const { token } = data;
 
-    commit('SET_USER_DATA', { form, token });
+    commit('SET_LOGIN_DATA', { form, token });
   },
 
   async login({ commit }, form) {
     let { email, password } = form;
     console.log(email, password);
     const { data } = await AuthService.login(form);
+    const { token } = data;
     console.log(data);
-    commit('SET_USER_DATA', data);
+    commit('SET_USER_DATA', { form, token });
   },
 
   async logout({ commit }) {

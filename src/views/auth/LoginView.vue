@@ -90,13 +90,13 @@ export default {
 
       try {
         const body = {
-          // name: this.form.name,
+          name: this.form.name,
           email: 'george.bluth@reqres.in',
           password: this.form.password,
         };
 
         await this.$store.dispatch('auth/login', body);
-        // await this.$router.push({ name: 'dashboard' });
+        await this.$router.push({ name: 'dashboard' });
       } catch (error) {
         console.log(error);
         alert(error.response.data.error);
