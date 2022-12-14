@@ -53,10 +53,8 @@ const mutations = {
 const actions = {
   async registerUser({ commit }, form) {
     // let { name, email, password, incomingCurrency, outgoingCurrency } = form;
-    // console.log(name, email, password);
 
     const { data } = await AuthService.registerUser(form);
-    // console.log(data);
     const { token } = data;
 
     commit('SET_LOGIN_DATA', { form, token });
@@ -67,7 +65,6 @@ const actions = {
     console.log(email, password);
     const { data } = await AuthService.login(form);
     const { token } = data;
-    console.log(data);
     commit('SET_USER_DATA', { form, token });
   },
 

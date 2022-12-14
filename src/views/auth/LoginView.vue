@@ -98,7 +98,6 @@ export default {
         await this.$store.dispatch('auth/login', body);
         await this.$router.push({ name: 'dashboard' });
       } catch (error) {
-        console.log(error);
         alert(error.response.data.error);
       }
     },
