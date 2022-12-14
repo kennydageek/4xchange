@@ -9,7 +9,13 @@
         placeholder="Username"
         :value="form.name"
         v-model="form.name"
+        @blur="$v.form.name.$touch()"
       />
+      <template v-if="$v.form.name.$error">
+        <p v-if="!$v.form.name.required" class="error-class">
+          Username is required
+        </p>
+      </template>
 
       <x-base-input
         class="base-input mb-5"
@@ -18,13 +24,28 @@
         :value="form.email"
         v-model="form.email"
       />
+      <template v-if="$v.form.email.$error">
+        <p v-if="!$v.form.email.required" class="error-class">
+          Password is required
+        </p>
+        <p v-if="!$v.form.email.email" class="error-class">
+          Please enter a valid email
+        </p>
+      </template>
+
       <x-base-input
         class="base-input mb-5"
         type="password"
         placeholder="Password"
         v-model="form.password"
         :value="form.email"
+        @blur="$v.form.email.$touch()"
       />
+      <template v-if="$v.form.password.$error">
+        <p v-if="!$v.form.password.required" class="error-class">
+          Password is required
+        </p></template
+      >
 
       <p class="currency-heading mb-2 mt-5">Preferred Incoming currency</p>
 
@@ -34,8 +55,14 @@
           :value="form.incoming"
           name="currencies"
           :options="currency"
+          @blur="$v.form.incoming.$touch()"
         />
       </div>
+      <template v-if="$v.form.incoming.$error">
+        <p v-if="!$v.form.incoming.required" class="error-class">
+          Choose an incoming currency
+        </p>
+      </template>
 
       <p class="currency-heading mb-2 mt-5">Preferred Outgoing currency</p>
 
@@ -45,8 +72,14 @@
           :value="form.outgoing"
           name="currencies"
           :options="currency"
+          @blur="$v.form.outgoing.$touch()"
         />
       </div>
+      <template v-if="$v.form.outgoing.$error">
+        <p v-if="!$v.form.outgoingCurrency.required" class="error-class">
+          Choose an outgoing currency
+        </p>
+      </template>
 
       <x-base-button class="btn-cta mb-5" type="submit">
         Sign up
@@ -61,7 +94,8 @@
 
 <script>
 import currencyList from '@/utils/currencyList.json';
-// import AuthService from '@/services/authService.js';
+import { required, email } from 'vuelidate/lib/validators';
+
 export default {
   data() {
     return {
@@ -75,9 +109,24 @@ export default {
       },
     };
   },
+  validations: {
+    form: {
+      name: { required },
+      password: { required },
+      email: { required, email },
+      incoming: { required },
+      outgoing: { required },
+    },
+  },
 
   methods: {
     async registerUser() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        alert('Please fill all required fields');
+        return;
+      }
+
       try {
         const body = {
           name: this.form.name,

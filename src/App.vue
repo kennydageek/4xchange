@@ -49,4 +49,10 @@ body {
   background-color: var(--bg-color);
   color: #fff;
 }
+
+.error-class {
+  color: red;
+  font-size: 0.8rem;
+  background: transparent !important;
+}
 </style>

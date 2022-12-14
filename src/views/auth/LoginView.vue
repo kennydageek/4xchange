@@ -9,7 +9,13 @@
         placeholder="Username"
         v-model="form.name"
         :value="form.name"
+        @blur="$v.form.name.$touch()"
       />
+      <template v-if="$v.form.name.$error">
+        <p v-if="!$v.form.name.required" class="error-class">
+          Username is required
+        </p></template
+      >
 
       <x-base-input
         class="base-input mb-5"
@@ -17,7 +23,16 @@
         placeholder="Email address"
         v-model="form.email"
         :value="form.email"
+        @blur="$v.form.email.$touch()"
       />
+      <template v-if="$v.form.email.$error">
+        <p v-if="!$v.form.email.required" class="error-class">
+          Email is required
+        </p>
+        <p v-if="!$v.form.email.email" class="error-class">
+          Please enter a valid email
+        </p>
+      </template>
 
       <x-base-input
         class="base-input mb-10"
@@ -25,7 +40,14 @@
         placeholder="Password"
         v-model="form.password"
         :value="form.password"
+        @blur="$v.form.password.$touch()"
       />
+      <template v-if="$v.form.password.$error">
+        <p v-if="!$v.form.password.required" class="error-class">
+          Password is required
+        </p></template
+      >
+
       <x-base-button
         class="btn-cta mb-5"
         @click="$router.push({ name: 'Dashboard' })"
@@ -42,6 +64,7 @@
 </template>
 
 <script>
+import { required, email } from 'vuelidate/lib/validators';
 export default {
   data() {
     return {
@@ -54,8 +77,22 @@ export default {
     };
   },
 
+  validations: {
+    form: {
+      name: { required },
+      password: { required },
+      email: { required, email },
+    },
+  },
+
   methods: {
     async login() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        alert('Please fill all required fields');
+        return;
+      }
+
       try {
         const body = {
           name: this.form.name,
