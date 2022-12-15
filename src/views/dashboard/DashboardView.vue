@@ -91,9 +91,11 @@ export default {
     }, 30000);
   },
   async created() {
-    this.name = JSON.parse(localStorage.getItem('user')).name;
-    this.incoming = JSON.parse(localStorage.getItem('user')).incomingCurrency;
-    this.outgoing = JSON.parse(localStorage.getItem('user')).outgoingCurrency;
+    this.name = await JSON.parse(localStorage.getItem('user')).name;
+    this.incoming = await JSON.parse(localStorage.getItem('user'))
+      .incomingCurrency;
+    this.outgoing = await JSON.parse(localStorage.getItem('user'))
+      .outgoingCurrency;
     await this.$store.dispatch('currency/getExchangeRates');
     await this.$store.dispatch('currency/getDailyPrice');
     this.day = await this.$store.state.currency.price;

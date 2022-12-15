@@ -28,7 +28,7 @@ const mutations = {
   },
 
   SET_LOGIN_DATA(state, { form, token }) {
-    let { name, email } = form;
+    let { name, email, incomingCurrency, outgoingCurrency } = form;
     state.user = form;
     localStorage.setItem('token', JSON.stringify(token));
     apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -38,13 +38,13 @@ const mutations = {
       JSON.stringify({
         name,
         email,
-        incomingCurrency: 'EUR',
-        outgoingCurrency: 'USD',
+        incomingCurrency,
+        outgoingCurrency,
       })
     );
   },
 
-  CLEAR_USER_DATA() {
+  CLEAR_USER_DATA() {``
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     location.reload();
